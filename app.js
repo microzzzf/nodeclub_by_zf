@@ -8,6 +8,10 @@ var bodyParser = require('body-parser');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
+var _ = require('lodash');
+var config = require('./config');
+var Loader = require('loader');
+
 var app = express();
 
 // view engine setup
@@ -20,7 +24,13 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(Loader.less(__dirname));
 app.use(express.static(path.join(__dirname, 'public')));
+
+_.extend(app.locals, {
+    config: config
+});
+_.extend(app.locals, require('./helpers/render_helper'));
 
 app.use('/', routes);
 app.use('/users', users);

@@ -1,7 +1,30 @@
 doctype html
-html
+html(lang="zh-cn")
   head
+    meta(charset="utf-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
     title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
+  - Loader('stylesheets/bootstrap.css')
+  - .css('stylesheets/bootstrap-responsive.css')
+  - .css('stylesheets/style.less')
+  - .done(assets, config.site_static_host, config.mini_assets)
   body
+    div(class="navbar" role="navigation")
+        div(class="navbar-inner")
+            div(class="container")
+                a(class="brand" href="#")
+                    img(src=staticFile(config.site_logo)) 
+                form(id='search_form' class='navbar-search' action="/search")
+                    input(type='text' id='q' name='q' class='search-query span3' value='')
+                ul(class='nav pull-right')
+                    li
+                        a(href='/') 首页
+                    li
+                        a(href='/getstart') 新手入门
+                    li
+                        a(href='/api') API
+                    li
+                        a(href='/signup') 注册
+                    li
+                        a(href='/signin') 登录
     block content
